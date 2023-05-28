@@ -1,0 +1,35 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@dicebear/collection": "^6.0.3",
+    "@dicebear/core": "^6.0.3",
+    "axios": "^1.4.0",
+    "js-cookie": "^3.0.5",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vue-toastification": "^2.0.0-rc.5",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@iconify/vue": "^4.1.1",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
