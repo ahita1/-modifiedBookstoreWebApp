@@ -15,7 +15,7 @@ const toastOptions = computed(() => {
       :class="[
         'toast-box shadow-lg border p-3 m-2',
         toastOptions.type === 'error'
-          ? 'border-red-300 , bg-red-500 , text-white , rounded-xl'
+          ? 'border-red-500 , bg-red-500 , text-white , rounded-xl'
           : toastOptions.type === 'success'
           ? 'border-blue-300 , bg-gradient-to-br from-blue-500 to-purple-500 bg-opacity-50 , text-white , rounded-xl'
           : 'border-sky-600',

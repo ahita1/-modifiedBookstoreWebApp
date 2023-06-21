@@ -140,7 +140,7 @@ const deleteAccount = async () => {
           <label class="text-lg" for="id">laptopModel:</label>
           <select
             v-model="account.laptopModel"
-            class="outline-none rounded border border-white py-3 px-6 w-full bg-white text-slate-600"
+            class="outline-none rounded border lg:border-white py-3 px-6 w-full bg-white text-slate-600"
           >
             <option :selected="account.laptopModel === 'HP'" value="HP">
               HP

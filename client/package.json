@@ -11,8 +11,10 @@
     "@dicebear/collection": "^6.0.3",
     "@dicebear/core": "^6.0.3",
     "axios": "^1.4.0",
+    "chart.js": "^4.3.0",
     "js-cookie": "^3.0.5",
     "vue": "^3.2.13",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.3",
     "vue-toastification": "^2.0.0-rc.5",
     "vuex": "^4.0.0"

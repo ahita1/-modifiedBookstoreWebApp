@@ -1,92 +1,74 @@
 const Router = require("express").Router();
 const User = require("../models/User");
-const { checkAdmin ,checkUser } = require("../middlewares/checkToken")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const router = Router;
-const bcrypt = require("bcryptjs")
+
+const TokenMiddleware = require("../middlewares/token.middleware");
+const AccountMiddleware = require("../middlewares/account.middleware");
+const AccountService = require("../services/accounts.services");
+
+const { checkAll, checkPrivacy , checkAdmin } = new TokenMiddleware();
+const { update } = new AccountMiddleware();
+const accountService = new AccountService();
+
+
+// get all users haha
+router.get('/' , checkAdmin , async(req  ,res) => {
+   try {
+    const result = await accountService.getUsers()
+
+    res.json(result)
+   } catch (error) {
+    console.log(error.message);
+   }
+})
 
 
 
-//update user by id
-router.put("/:id", checkUser , async (req, res) => {
+
+//update account
+router.put("/:id", checkAll, checkPrivacy, update, async (req, res) => {
   try {
-     username = req.body.account
-    const token = req.headers.authorization?.split(" ")[1]
-    const decodedUser = jwt.decode(token , 'tokensecret')
-    const currentUser = await User.findById(req.params.id)
-    console.log(decodedUser);
-    if(currentUser._id.toString() !== decodedUser.user._id ||
-    decodedUser.user.username !== "Ahunem Nigussie"){
-      return res.json({status : 'bad' , msg : 'unauthorized user'})
-    }
-
-    const existUserwithUsername = await User.findOne({ username })
-    if
-    (
-      existUserwithUsername && existUserwithUsername._id.toString() !== decodedUser.user._id
-      ){
-        return res.json({status : 'bad' , 'msg' : 'there is no user with such username nigga haha'})
-      }
-    const updateUser = await User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body.account,
-      },
-      { new: true }
-    );
-    res.json({
-      status: "ok",
-      msg: "user updated successfully!",
-      account: updateUser,
+    const result = await AccountService.update({
+      id: req.params.id,
+      account: req.body.account,
     });
+    res.json(result)
   } catch (error) {
     console.log(error.message);
   }
 });
 
 
-
 //get user by id or search user by id
-router.get("/:id", async (req, res) => {
-    try {
-      const user = await User.findById(req.params.id,);
-     if(!user){
-        res.json({
-            status: "bad",
-            msg: "account not exist",
-          });
-     }
-     res.json({
-        status: "ok", 
-        account : user,
-        msg: "user exists",
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  });
+router.get("/:id", checkAll, checkPrivacy, async (req, res) => {
+  try {
 
-  //delete user by id
-  router.delete("/:id", async (req, res) => {
-    try {
-      const deleteUser = await User.findByIdAndDelete(req.params.id);
-        res.json({
-            status: "ok",
-            msg: "user deleted successfully!",
-            account : deleteUser,
-          });
+    const result = await AccountService.getUser(req.params.id)
+    res.json(result);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 
-    } catch (error) {
-      console.log(error.message);
-    }
-  });
 
-  router.get('/get/all', checkAdmin ,  async(req , res) =>{
-    try {
-      const users = await User.find()
-      res.json(users)
-    } catch (error) {
-      console.log(error.message);
-    }
-  })
-module.exports = router
+//delete user by id
+router.delete("/:id", checkAll, checkPrivacy, async (req, res) => {
+  try {
+    const result = await AccountService.deleteUser(req.params.id)
+    res.json(result);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+
+router.get("/get/all", checkAdmin, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+module.exports = router;

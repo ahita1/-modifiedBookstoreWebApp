@@ -1,7 +1,7 @@
+require('dotenv').config()
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 const app = express();
 
 app.use(express.json());
@@ -14,8 +14,8 @@ app.use(cors({ origin: "*" }));
 // mongodb+srv://ahita:<password>@cluster0.md1ps2w.mongodb.net/?retryWrites=true&w=majority
 mongoose
   .connect(
-  "mongodb://localhost:27017"
-    )
+process.env.MONGODB_URI  ,{ useNewUrlParser: true, useUnifiedTopology: true }
+ )
   .then(() => {
     console.log("Ahita don's worry it's connected to the database successfully haha");
   })
@@ -29,6 +29,6 @@ app.get("/", (req, res) => {
 app.use("/auth" , require("./routes/auth"));
 app.use("/accounts" , require("./routes/accounts"));
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
   console.log("server started!");
 });

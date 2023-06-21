@@ -35,7 +35,9 @@ const authModule = {
             { show: true, type: "error", msg: res.data.msg },
             { root: true }
           );
-        }  
+        }
+        
+        
         else {
           Cookies.set("account", JSON.stringify(res.data.user));
           Cookies.set("token", res.data.token);
@@ -52,6 +54,8 @@ const authModule = {
             window.location.href = "/explore"
           },5000)
         }
+
+        
         // commit('setAccount' , res.data.user)
         // commit('setToken' , res.data.token)
       } catch (error) {
